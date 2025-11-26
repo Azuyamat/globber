@@ -30,6 +30,6 @@ task vet {
 }
 
 task basic {
-	command "go run -tags logger examples/basic/main.go F:\\code\\go !**/*.go" 
+	command "go run -tags logger examples/basic/main.go C:\\code **/*.go" 
 	description "Run basic example"
 }
