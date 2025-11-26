@@ -15,24 +15,10 @@ func lex(pattern string) ([]token, error) {
 			}
 		case '/':
 			tokens = append(tokens, token{Type: tokenSlash, Literal: "/"})
-		case '?':
-			tokens = append(tokens, token{Type: tokenQuestion, Literal: "?"})
 		case '.':
 			tokens = append(tokens, token{Type: tokenDot, Literal: "."})
-		case '[':
-			tokens = append(tokens, token{Type: tokenLBracket, Literal: "["})
-		case ']':
-			tokens = append(tokens, token{Type: tokenRBracket, Literal: "]"})
 		case '!':
 			tokens = append(tokens, token{Type: tokenNegate, Literal: "!"})
-		case '|':
-			tokens = append(tokens, token{Type: tokenPipe, Literal: "|"})
-		case ',':
-			tokens = append(tokens, token{Type: tokenComma, Literal: ","})
-		case '(':
-			tokens = append(tokens, token{Type: tokenLParen, Literal: "("})
-		case ')':
-			tokens = append(tokens, token{Type: tokenRParen, Literal: ")"})
 		default:
 			if !isSpecialChar(scanner.char) {
 				startPos := scanner.position

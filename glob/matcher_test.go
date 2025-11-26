@@ -145,6 +145,66 @@ func TestMatches(t *testing.T) {
 			path:    "src/a/b/main.go",
 			want:    false,
 		},
+		{
+			name:    "negate exact match",
+			pattern: "!file.txt",
+			path:    "file.txt",
+			want:    false,
+		},
+		{
+			name:    "negate exact match - different file",
+			pattern: "!file.txt",
+			path:    "other.txt",
+			want:    true,
+		},
+		{
+			name:    "negate wildcard",
+			pattern: "!*.txt",
+			path:    "file.txt",
+			want:    false,
+		},
+		{
+			name:    "negate wildcard - different extension",
+			pattern: "!*.txt",
+			path:    "file.md",
+			want:    true,
+		},
+		{
+			name:    "negate double wildcard",
+			pattern: "!**/*.go",
+			path:    "src/main.go",
+			want:    false,
+		},
+		{
+			name:    "negate double wildcard - different extension",
+			pattern: "!**/*.go",
+			path:    "src/main.js",
+			want:    true,
+		},
+		{
+			name:    "negate path pattern",
+			pattern: "!src/*.go",
+			path:    "src/main.go",
+			want:    false,
+		},
+		{
+			name:    "negate path pattern - different directory",
+			pattern: "!src/*.go",
+			path:    "lib/main.go",
+			want:    true,
+		},
+		{
+			name:    "negate with dot",
+			pattern: "!.gitignore",
+			path:    ".gitignore",
+			want:    false,
+		},
+		{
+			name:    "negate with dot - different file",
+			pattern: "!.gitignore",
+			path:    ".env",
+			want:    true,
+		},
 	}
 
 	for _, tt := range tests {
@@ -242,7 +302,6 @@ func BenchmarkRegexMatcher(b *testing.B) {
 	}
 }
 
-// Benchmark compilation overhead
 func BenchmarkGlobCompilation(b *testing.B) {
 	for _, bc := range benchmarkCases {
 		b.Run(bc.name, func(b *testing.B) {
@@ -263,7 +322,6 @@ func BenchmarkRegexCompilation(b *testing.B) {
 	}
 }
 
-// Benchmark full matching including compilation
 func BenchmarkGlobMatcherWithCompilation(b *testing.B) {
 	for _, bc := range benchmarkCases {
 		b.Run(bc.name, func(b *testing.B) {

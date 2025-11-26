@@ -1,0 +1,35 @@
+default build
+
+task test {
+    command "go test ./..."
+    description "Run tests"
+}
+
+task benchmark {
+	command "go test -bench=Benchmark -benchmem"
+	description "Run benchmarks"
+	working_dir "./glob"
+}
+
+task benchmark-compare {
+	command "go test -bench=Benchmark -benchmem ./glob | go run scripts/benchmark_compare.go"
+	description "Run benchmarks with comparison"
+}
+
+task tidy {
+    command "go mod tidy"
+    description "Tidy go.mod and go.sum"
+    inputs ["go.mod"]
+}
+
+task vet {
+    command "go vet ./..."
+    description "Run go vet"
+    inputs ["**/*.go"]
+    cache true
+}
+
+task basic {
+	command "go run -tags logger examples/basic/main.go F:\\code\\go !**/*.go" 
+	description "Run basic example"
+}

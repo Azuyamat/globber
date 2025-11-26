@@ -8,15 +8,8 @@ const (
 	tokenStar
 	tokenDoubleStar
 	tokenSlash
-	tokenLBracket
-	tokenRBracket
-	tokenQuestion
 	tokenDot
 	tokenNegate
-	tokenPipe
-	tokenComma
-	tokenLParen
-	tokenRParen
 )
 
 type token struct {
@@ -26,7 +19,7 @@ type token struct {
 
 func isSpecialChar(ch byte) bool {
 	switch ch {
-	case '*', '?', '[', ']', '/', '!', '|', ',', '(', ')', '.':
+	case '*', '/', '!', '.':
 		return true
 	default:
 		return false
